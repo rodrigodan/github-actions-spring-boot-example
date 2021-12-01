@@ -1,4 +1,13 @@
-FROM openjdk:11
-EXPOSE 8080
-ADD target/springboot-images-new.jar springboot-images-new.jar
-ENTRYPOINT ["Java","-jar","/springboot-images-new.jar"]
+FROM adoptopenjdk/openjdk11:alpine-jre
+
+# Refer to Maven build -> finalName
+ARG JAR_FILE=target/springboot-images-new.jar
+
+# cd /opt/app
+WORKDIR /opt/app
+
+# cp target/spring-boot-web.jar /opt/app/app.jar
+COPY ${JAR_FILE} springboot-images-new.jar
+
+# java -jar /opt/app/app.jar
+ENTRYPOINT ["java","-jar","springboot-images-new.jar"]
